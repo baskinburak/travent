@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="100"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
+
+    <ImageView
+        android:id="@+id/categoryImage"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="20"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="65"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/placeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/placeAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    
+    <ImageView
+        android:id="@+id/favImage"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="15"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:layout_gravity="center"/>
+</LinearLayout>

@@ -1,0 +1,40 @@
+<div class="bootstrap-buffer-hw8"></div>
+<div class="row" *ngIf="favbox.favorites.length === 0">
+  <div class="col-md-12">
+    <div class="alert alert-warning">No records.</div>
+  </div>
+</div>
+
+<div class="row" *ngIf="favbox.favorites.length !== 0">
+  <div class="col-12">
+
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Favorite</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of favbox.favorites, let i = index" [ngStyle]="{'display': i >= page*20 && i<(page+1)*20 ? 'table-row': 'none'}" [ngClass]="{'table-warning': details.place && result.id === details.place.id}">
+            <th class="valign" scope="row">{{i-page*20+1}}</th>
+            <td class="valign"><img width="40px" src="{{result.icon}}"></td>
+            <td class="valign">{{result.name}}</td>
+            <td class="valign">{{result.address}}</td>
+            <td class="valign"><button class="btn btn-light" (click)="favbox.toggle(result); page_drop();"><i class="fas fa-trash-alt"></i></button></td>
+            <td class="valign"><button class="btn btn-light" (click)="load_details(result)"><i class="fa fa-angle-right"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-12 text-center">
+    <button class="btn btn-light" *ngIf="page>0" (click)="prevpage()">Previous</button>
+    <button class="btn btn-light" *ngIf="favbox.favorites.length > (page+1)*20" (click)="nextpage()">Next</button>
+  </div>
+</div>

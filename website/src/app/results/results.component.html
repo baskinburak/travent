@@ -1,0 +1,32 @@
+<div *ngIf="search_results && search_results.places.length > 0" class="row">
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Favorite</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of places_to_show, let i = index" [ngClass]="{'table-warning': details.place && result.id === details.place.id}">
+            <th class="valign" scope="row">{{i+1}}</th>
+            <td class="valign"><img width="40px" src="{{result.icon}}"></td>
+            <td class="valign">{{result.name}}</td>
+            <td class="valign">{{result.address}}</td>
+            <td class="valign"><button class="btn btn-light" (click)="favbox.toggle(result)"><i class="fa-star" [ngStyle] = "{'color': favbox.exists(result.id) ? 'orange' : 'black'}" [ngClass]="{'far': !favbox.exists(result.id), 'fas': favbox.exists(result.id)}"></i></button></td>
+            <td class="valign"><button class="btn btn-light" (click)="load_details(result)"><i class="fa fa-angle-right"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-12 text-center">
+    <button class="btn btn-light" *ngIf="pagination.page > 0" (click)="prevpage()">Previous</button>
+    <button class="btn btn-light" *ngIf="pagination.next_page_token || pagination.page+1 < pagination.pages.length" (click)="nextpage()">Next</button>
+  </div>
+</div>

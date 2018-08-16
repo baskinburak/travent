@@ -1,0 +1,24 @@
+.search-form-container {
+  background-color: #f8f8f8;
+  border: 2px solid #e6e6e6;
+  border-radius:10px;
+  padding: 20px 10px;
+}
+
+.btn-light {
+  background-color: white;
+  border: 2px solid #e6e6e6;
+}
+
+.btn-light:hover {
+  background-color: #f0f0f0;
+}
+
+.display {
+  display: block;
+}
+
+.border-red {
+  border-color: red;
+  border-width: 2px;
+}

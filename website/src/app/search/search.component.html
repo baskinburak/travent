@@ -1,0 +1,78 @@
+<div class="row" style="padding-left: 10px; padding-right: 10px;">
+  <div class="col-lg-10 offset-lg-1 col-12 search-form-container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <h3 class="text-center">Travel and Entertainment Search</h3>
+        <form #searchForm (change)="form_changed=true;">
+          <div class="form-group row">
+            <label for="keyword" class="col-md-3 col-form-label">Keyword<span style="color:red">*</span></label>
+            <div class="col-md-9">
+              <input #keyword="ngModel" (change)="keyword_changed = true;" #keywordInput name="keyword" [ngClass]="{'border-red':  !keywordOK() &&  keyword.touched}"
+              required="true" type="text" [(ngModel)]="search_fields.keyword" class="form-control">
+              <small [ngStyle]="{'display': (!keywordOK() &&  keyword.touched) ? 'block' : 'none' }" class="form-text" style="color:red">Please enter a keyword.</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="category" class="col-md-3 col-form-label">Category</label>
+            <div class="col-md-6">
+              <select name="category" class="form-control" [(ngModel)]="search_fields.category">
+                <option value="default" selected>Default</option>
+                <option value="airport">Airport</option>
+                <option value="amusemenent_park">Amusemenent Park</option>
+                <option value="aquarium">Aquarium</option>
+                <option value="art_gallery">Art Gallery</option>
+                <option value="bakery">Bakery</option>
+                <option value="bar">Bar</option>
+                <option value="beauty_salon">Beauty Salon</option>
+                <option value="bowling_alley">Bowling Alley</option>
+                <option value="bus_station">Bus Station</option>
+                <option value="cafe">Cafe</option>
+                <option value="campground">Campground</option>
+                <option value="car_rental">Car Rental</option>
+                <option value="casino">Casino</option>
+                <option value="lodging">Lodging</option>
+                <option value="movie_theater">Movie Theater</option>
+                <option value="museum">Museum</option>
+                <option value="night_club">Night Club</option>
+                <option value="park">Park</option>
+                <option value="parking">Parking</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="shopping_mall">Shopping Mall</option>
+                <option value="stadium">Stadium</option>
+                <option value="subway_station">Subway Station</option>
+                <option value="taxi_stand">Taxi Stand</option>
+                <option value="train_station">Train Station</option>
+                <option value="transit_station">Transit Station</option>
+                <option value="travel_agency">Travel Agency</option>
+                <option value="zoo">Zoo</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="distance" class="col-md-3 col-form-label">Distance(miles)</label>
+            <div class="col-md-6">
+              <input class="form-control" type="number" name="distance" [(ngModel)]="search_fields.distance" placeholder="10">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="use_current_loc" class="col-md-3 col-form-label">From<span style="color:red">*</span></label>
+            <div class="col-md-9">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" checked="true" type="radio" name="use_current_loc" [(ngModel)]="search_fields.use_current_loc" [value]="true">Current location
+                </label>
+                <div class="form-check-label">
+                  <input class="form-check-input" type="radio" name="use_current_loc" [(ngModel)]="search_fields.use_current_loc" [value]="false">Other. Please specify:
+                </div>
+                <input (change)="location_changed = true;" #location="ngModel" #locationElement autocomplete="off" [ngClass]="{'border-red': !locationOK() && location.touched && !search_fields.use_current_loc}" class="form-control" type="text" placeholder="Enter a location" name="current_loc" [(ngModel)]="search_fields.location" [required]="!search_fields.use_current_loc" [disabled]="search_fields.use_current_loc">
+                <small [ngStyle]="{'display': (!locationOK() &&  location.touched && !search_fields.use_current_loc) ? 'block' : 'none' }" class="form-text" style="color:red">Please enter a location.</small>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" [disabled]="!searchOK()" (click)="performSearch()"><i class="fa fa-search" style="margin-right:3px"></i>Search</button>
+          <button type="button" class="btn btn-light" (click)="resetForm();">Clear</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InfoFragment"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <LinearLayout
+        android:id="@+id/infoAddressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/infoAddress"
+            android:layout_width="0dp"
+            android:layout_weight="70"
+            android:layout_height="wrap_content"
+            android:text="Address"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/infoPhoneLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="wrap_content"
+            android:text="Phone Number"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/infoPhone"
+            android:layout_width="0dp"
+            android:layout_weight="70"
+            android:layout_height="wrap_content"
+            android:text="+13234496414"
+            android:autoLink="phone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/infoPriceLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="wrap_content"
+            android:text="Price Level"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/infoPrice"
+            android:layout_width="0dp"
+            android:layout_weight="70"
+            android:layout_height="wrap_content"
+            android:text="$$"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/infoRatingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="wrap_content"
+            android:text="Rating"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="70">
+
+            <RatingBar
+                android:id="@+id/infoRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="4.2"
+                style="?android:attr/ratingBarStyleSmall"
+                android:stepSize="0.1"
+                android:isIndicator="true"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/infoGooglePageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="wrap_content"
+            android:text="Google Page"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/infoGooglePage"
+            android:layout_width="0dp"
+            android:layout_weight="70"
+            android:layout_height="wrap_content"
+            android:text="https://google.com"
+            android:autoLink="web"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/infoWebsiteLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="wrap_content"
+            android:text="Website"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/infoWebsite"
+            android:layout_width="0dp"
+            android:layout_weight="70"
+            android:layout_height="wrap_content"
+            android:text="https://doldur.xyz"
+            android:autoLink="web"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,244 @@
+  <div class="bootstrap-buffer-hw8"></div>
+  <a href="{{twitter_url}}" style="display: none" #twitterLink></a>
+
+  <div class="alert alert-danger" *ngIf="show_details_fetch_error">Failed to fetch details.</div>
+  <ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100">
+      <span class="half" [style.width.%]="fill">&#9733;</span><span class="def-star">&#9734;</span>
+    </span>
+  </ng-template>
+
+  <div class="row" *ngIf="!show_details_fetch_error">
+    <div class="col-12 text-center">
+        <h3>{{detailsService.details.name}}</h3>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12">
+      <button class="btn btn-light" (click) = "lists_button.emit();"><i class="fa fa-angle-left fa-lg"></i> List</button>
+      <span class="float-right" style="display: inline-block" *ngIf="!show_details_fetch_error">
+        <button [disabled] = "!detailsService.details.hasOwnProperty('name')" class="btn btn-light" (click)="favbox.toggle(detailsService.place)"><i class="fa-star" [ngStyle] = "{'color': favbox.exists(detailsService.place.id) ? 'orange' : 'black'}" [ngClass]="{'far': !favbox.exists(detailsService.place.id), 'fas': favbox.exists(detailsService.place.id)}"></i></button>
+        <button [disabled] = "!detailsService.details.hasOwnProperty('name')" class="btn btn-light" (click)="twitter_link.nativeElement.click();" style="background-color: #00aced; border: none"><i class="fab fa-twitter fa-lg" style="color:white;"></i></button>
+      </span>
+    </div>
+  </div>
+  <div class="bootstrap-buffer-hw8"></div>
+
+  <div class="row" [ngStyle]="{'display': show_details_fetch_error ? 'none': 'block'}">
+    <div class="col-12">
+      <ul class="nav nav-tabs justify-content-end" id="detailstabs" role="tablist">
+        <li class="nav-item">
+          <a #infoLink class="nav-link active" id="details-info-tab" data-toggle="tab" href="#details-info" role="tab" aria-controls="info" aria-selected="true">Info</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="details-photos-tab" data-toggle="tab" href="#details-photos" role="tab" aria-controls="photos" aria-selected="false">Photos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="details-map-tab" data-toggle="tab" href="#details-map" role="tab" aria-controls="map" aria-selected="false">Map</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="details-reviews-tab" data-toggle="tab" href="#details-reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews</a>
+        </li>
+      </ul>
+      <div class="bootstrap-buffer-hw8"></div>
+      <div class="tab-content" id="detailstabscontent">
+        <div class="tab-pane fade show active" id="details-info" role="tabpanel" aria-labelledby="info-tab">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <tbody>
+                <tr *ngIf="this.detailsService.details.formatted_address"><th scope="row">Address</th><td>{{this.detailsService.details.formatted_address}}</td></tr>
+                <tr *ngIf="this.detailsService.details.international_phone_number"><th scope="row">Phone Number</th><td>{{this.detailsService.details.international_phone_number}}</td></tr>
+                <tr *ngIf="this.detailsService.details.price_level"><th scope="row">Price Level</th><td>{{this.detailsService.details.price_level}}</td></tr>
+                <tr *ngIf="this.detailsService.details.rating"><th scope="row">Rating</th><td>{{this.detailsService.details.rating}} <ngb-rating [starTemplate]="t" [(rate)]="detailsService.details.rating" [readonly]="true" [max]="detailsService.details.max_rating"></ngb-rating></td></tr>
+                <tr *ngIf="this.detailsService.details.url"><th scope="row">Google Page</th><td><a href="{{this.detailsService.details.url}}" target="_blank">{{this.detailsService.details.url}}</a></td></tr>
+                <tr *ngIf="this.detailsService.details.website"><th scope="row">Website</th><td><a href="{{this.detailsService.details.website}}" target="_blank">{{this.detailsService.details.website}}</a></td></tr>
+                <tr *ngIf="this.detailsService.details.opening_hours"><th scope="row">Hours</th><td>{{this.detailsService.details.hw8_time_text}} <a style="margin-left:20px" href="#hrsModal" data-target="#hrsModal" data-toggle="modal">Daily open hours</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="modal" tabindex="-1" role="dialog" id="hrsModal" *ngIf="this.detailsService.details.opening_hours">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Open hours</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <table class="table">
+                    <tbody>
+                      <tr *ngFor="let day of detailsService.details.hw8_weekday_text, let idx = index" [ngStyle]="{'font-weight': idx === 0 ? 'bold': 'normal'}">
+                        <td>{{day.day}}</td>
+                        <td>{{day.hrs}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+        <div class="tab-pane fade" id="details-photos" role="tabpanel" aria-labelledby="photos-tab">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="alert alert-warning" *ngIf="!this.detailsService.details.hw8_photo_urls || this.detailsService.details.hw8_photo_urls.length === 0">No records.</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div *ngFor="let url of this.detailsService.details.hw8_photo_urls, let idx = index">
+                <a class="details-image" *ngIf="idx%4 === 0" [href]="url" target="_blank">
+                  <img [src]="url" alt="" style="width:100%;">
+                </a>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div *ngFor="let url of this.detailsService.details.hw8_photo_urls, let idx = index">
+                <a class="details-image" *ngIf="idx%4 === 1" [href]="url" target="_blank">
+                  <img [src]="url" alt="" style="width:100%;">
+                </a>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div *ngFor="let url of this.detailsService.details.hw8_photo_urls, let idx = index">
+                <a class="details-image" *ngIf="idx%4 === 2" [href]="url" target="_blank">
+                  <img [src]="url" alt="" style="width:100%;">
+                </a>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div *ngFor="let url of this.detailsService.details.hw8_photo_urls, let idx = index">
+                <a class="details-image" *ngIf="idx%4 === 3" [href]="url" target="_blank">
+                  <img [src]="url" alt="" style="width:100%;">
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="tab-pane fade" id="details-map" role="tabpanel" aria-labelledby="map-tab">
+          <div class="row" *ngIf="no_route_error">
+            <div class="col-md-12">
+              <div class="alert alert-danger">No routes from given location to destination.</div>
+            </div>
+          </div>
+          <form class="row">
+            <div class="form-group col-lg-4" style="display: inline-block;">
+              <label for="mapform-from">From</label>
+              <input #mapformFromInput [(ngModel)]="mapform.from" type="text" class="form-control" name="mapform-from" id="mapform-from">
+            </div>
+            <div class="form-group col-lg-4" style="display: inline-block;">
+              <label for="mapform-to">To</label>
+              <input [(ngModel)]="mapform.to" disabled type="text" style="font-weight: bold" class="form-control" name="mapform-to" id="mapform-to">
+            </div>
+            <div class="form-group col-lg-2" style="display: inline-block;">
+              <label for="mapform-travelmode">Travel Mode</label>
+              <select class="form-control" [(ngModel)]="mapform.mode" name="mapform-travelmode" id="mapform-travelmode">
+                <option value="DRIVING">Driving</option>
+                <option value="BICYCLING">Bicycling</option>
+                <option value="TRANSIT">Transit</option>
+                <option value="WALKING">Walking</option>
+              </select>
+            </div>
+            <div class="form-group col-lg-2" style="display: inline-block;">
+              <label for="">&nbsp;</label>
+              <button style="display: inline-block;" [disabled]="mapform.from.trim() === ''" class="form-control btn btn-primary" (click)="getDirections()">Get Directions</button>
+            </div>
+            <div class="col-12">
+              <img (click)='toggleViewMode()' style="width: 50px; cursor: pointer; border: 2px solid #e6e6e6; padding: 2px; margin-bottom: 5px; border-radius: 5px" [src]="lilmanimage[viewMode]" alt="">
+            </div>
+          </form>
+          <div class="row" [ngStyle]="{'display': viewMode==='map'?'block': 'none'}">
+            <div class="col-12">
+              <div #mapElement style="height: 400px"></div>
+            </div>
+          </div>
+          <div class="row" [ngStyle]="{'display': viewMode==='map'?'block': 'none'}">
+            <div class="col-12">
+              <div #mapPanel></div>
+            </div>
+          </div>
+          <div class="row" [ngStyle]="{'display': viewMode==='street'?'block': 'none'}">
+            <div class="col-12">
+              <div #streetViewMapElement style="height: 400px"></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="tab-pane fade" id="details-reviews" role="tabpanel" aria-labelledby="reviews-tab">
+          <div class="row">
+            <div class="col-12">
+              <div class="dropdown" style="display: inline-block">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{current_reviews}} Reviews
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" style="cursor: pointer" (click)="current_reviews = 'Google';animateReviews();">Google Reviews</a>
+                  <a class="dropdown-item" style="cursor: pointer" (click)="current_reviews = 'Yelp';animateReviews();">Yelp Reviews</a>
+                </div>
+              </div>
+
+              <div class="dropdown" style="display: inline-block">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{current_order_text[current_order]}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" style="cursor: pointer" (click)="current_order = 'default';">Default Order</a>
+                  <a class="dropdown-item" style="cursor: pointer" (click)="current_order = 'highest_rating';">Highest Rating</a>
+                  <a class="dropdown-item" style="cursor: pointer" (click)="current_order = 'lowest_rating';">Lowest Rating</a>
+                  <a class="dropdown-item" style="cursor: pointer" (click)="current_order = 'most_recent';">Most Recent</a>
+                  <a class="dropdown-item" style="cursor: pointer" (click)="current_order = 'least_recent';">Least Recent</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bootstrap-buffer-hw8"></div>
+
+          <div [@fade-in]='fade_state' class="row" *ngIf="!reviews[current_reviews][current_order] || reviews[current_reviews][current_order].length === 0">
+            <div class="col-12">
+              <div class="alert alert-warning">
+                No records.
+              </div>
+            </div>
+          </div>
+
+          <div class="row" [@fade-in]='fade_state' *ngIf="reviews[current_reviews][current_order] && reviews[current_reviews][current_order].length > 0">
+            <div class="col-12">
+              <div class="row" *ngFor="let review of reviews[current_reviews][current_order]" style="margin-left: 5px; margin-right: 5px; border: 2px solid #e6e6e6; border-radius: 3px; padding: 10px;margin-bottom: 10px;">
+                <div class="col-md-1 col-3">
+                  <a style="width:100%" [href]="review.author_url.length > 0 ? review.author_url : '#'" target="_blank"><img style="width:100%; max-height: 100%;" *ngIf="review.author_image && review.author_image.length > 0" [src]="review.author_image" alt=""></a>
+                </div>
+
+                <div class="col-md-11 col-9">
+                  <div *ngIf="review.author_name && review.author_name.length > 0">
+                    <a [href]="review.author_url.length > 0 ? review.author_url : '#'" target="_blank">{{review.author_name}}</a>
+                  </div>
+                  <div>
+                    <ngb-rating [starTemplate]="t" [(rate)]="review.rating" [readonly]="true" [max]="review.rating" *ngIf="review.rating"></ngb-rating> <span *ngIf="review.time">{{review.time}}</span>
+                  </div>
+                  <div *ngIf="review.content">
+                    {{review.content}}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="bootstrap-buffer-hw8"></div>

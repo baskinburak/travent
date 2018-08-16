@@ -1,0 +1,15 @@
+{
+  "name": "hw8-baskin",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "latest",
+    "cors": "latest",
+    "request": "latest",
+    "fast-levenshtein": "latest",
+    "geolib": "latest"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}

@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="bootstrap-buffer-hw8"></div>
+  <app-search (searcherr)="search_error();" (searchdone)="load_latest_search_results($event);" (reset)="reset();"></app-search>
+  <div class="bootstrap-buffer-hw8"></div>
+  <ul class="nav nav-pills justify-content-center" id="navplacesmain-tab" role="tablist">
+    <li class="nav-item">
+      <a #resultsButton class="nav-link active" id="navplacesmain-results-tab"
+      data-toggle="pill" href="#navplacesmain-results"
+      role="tab" aria-controls="navplacesmain-results"
+      aria-selected="true" (click)="resclicked();">Results</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="navplacesmain-favorites-tab"
+      data-toggle="pill" href="#navplacesmain-favorites"
+      role="tab" aria-controls="navplacesmain-favorites"
+      aria-selected="false" (click)="favclicked();">Favorites</a>
+    </li>
+  </ul>
+
+
+  <div class="bootstrap-buffer-hw8" *ngIf="progress.progress !== 100"></div>
+  <div class="row" *ngIf="progress.progress !== 100">
+    <div class="col-12">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" [ngStyle]="{'width': progress.progress.toString() + '%'}" [attr.aria-valuenow]="progress.progress" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bootstrap-buffer-hw8"></div>
+
+  <div [@slide-from-right]='results_anim_state' class="row" *ngIf="page==='list' && ((latest_search_results && !search_error_occured && favres==='res') || (favres === 'fav' && favbox.favorites.length > 0))">
+    <div class="col-12 text-right">
+      <button class="btn btn-light" [disabled]="!details.details || !details.details.hasOwnProperty('name')" (click)="page='details'; animateDetails();">Details <i class="fa fa-angle-right fa-lg"></i></button>
+    </div>
+  </div>
+  <div [@slide-from-right]='results_anim_state' class="tab-content" id="navplacesmain" [ngStyle]="{display: page==='list' ? 'block': 'none'}">
+    <div class="tab-pane show active" id="navplacesmain-results" role="tabpanel" aria-labelledby="navplacesmain-results">
+      <div class="bootstrap-buffer-hw8"></div>
+      <app-results *ngIf="latest_search_results && !search_error_occured" [searchresults]="latest_search_results" (details-clicked)="load_details_page($event)"></app-results>
+      <div class="row" *ngIf="search_error_occured">
+        <div class="col-md-12">
+          <div class="alert-danger alert">Failed to get search results.</div>
+        </div>
+      </div>
+      <div class="alert alert-warning" [@slide-from-right]='results_anim_state' *ngIf="show_no_results_error">No records.</div>
+    </div>
+    <div class="tab-pane" id="navplacesmain-favorites" role="tabpanel" aria-labelledby="navplacesmain-favorites">
+      <app-favorites [@slide-from-right]='favorites_anim_state' (details-clicked)="load_details_page($event)"></app-favorites>
+    </div>
+  </div>
+
+  <div [@slide-from-left]='details_anim_state' class="row" [ngStyle]="{display: page==='details'?'block':'none'}">
+    <div class="col-12">
+      <app-details [place]="latest_requested_details_page_of" (go-back)="page='list'; animateResults();"></app-details>
+    </div>
+  </div>
+  <div #refForWidth class="bootstrap-buffer-hw8"></div>
+</div>
